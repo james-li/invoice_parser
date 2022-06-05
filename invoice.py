@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import threading
+import traceback
 
 import wx
 import wx.xrc
@@ -133,14 +134,18 @@ class InvoiceParserDlg(wx.Dialog):
                 for f in os.listdir(path):
                     if f.lower().endswith("pdf"):
                         files.append(os.path.join(path, f))
-            elif f.lower().endswith("pdf"):
+            elif path.lower().endswith("pdf"):
                 files.append(path)
         money_sum = 0
         row = 0
         for invoice_pdf in files:
             if row == self.m_data.GetNumberRows():
                 self.m_data.AppendRows(1)
-            invoice = parse_invoice_pdf(invoice_pdf)
+            try:
+                invoice = parse_invoice_pdf(invoice_pdf)
+            except:
+                traceback.print_exc()
+                continue
             for i, v in list(enumerate(self._COLUMNS)):
                 value = invoice.get(v, ' ')
                 if v == "金额":
