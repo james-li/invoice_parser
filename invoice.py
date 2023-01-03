@@ -30,7 +30,7 @@ class ParseThread(threading.Thread):
 
 
 class InvoiceParserDlg(wx.Dialog):
-    _COLUMNS = ["日期", "类型", "金额"]
+    _COLUMNS = ["文件名", "日期", "类型", "金额"]
 
     def __init__(self, parent):
         wx.Dialog.__init__(self, parent, id=wx.ID_ANY, title="发票解析器(拖拽发票目录到表格即可)", pos=wx.DefaultPosition,
@@ -158,7 +158,7 @@ class InvoiceParserDlg(wx.Dialog):
         if row == self.m_data.GetNumberRows():
             self.m_data.AppendRows(1)
         self.m_data.SetCellValue(row, 0, "合计")
-        self.m_data.SetCellValue(row, 2, str(money_sum))
+        self.m_data.SetCellValue(row, 3, str(money_sum))
         return
 
     def updateGrid(self):
